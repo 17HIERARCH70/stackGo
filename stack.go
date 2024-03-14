@@ -34,3 +34,10 @@ func (s *Stack) Pop() (interface{}, error) {
 	s.s = s.s[:l-1]
 	return res, nil
 }
+
+func (s *Stack) Len() int {
+	s.Lock()
+	defer s.Unlock()
+
+	return len(s.s)
+}
