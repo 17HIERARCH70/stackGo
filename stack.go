@@ -41,3 +41,26 @@ func (s *Stack) Len() int {
 
 	return len(s.s)
 }
+
+func (s *Stack) Compare(i, k int) (int, error) {
+	s.Lock()
+	defer s.Unlock()
+
+	if i < 0 || i >= len(s.s) || k < 0 || k >= len(s.s) {
+		return 0, errors.New("index out of range")
+	}
+
+	elemI, okI := s.s[i].(int)
+	elemK, okK := s.s[k].(int)
+	if !okI || !okK {
+		return 0, errors.New("elements are not integers")
+	}
+
+	if elemI == elemK {
+		return 0, nil
+	} else if elemI < elemK {
+		return -1, nil
+	} else {
+		return 1, nil
+	}
+}
