@@ -126,3 +126,44 @@ func TestStack_Compare(t *testing.T) {
 		t.Errorf("Expected 'elements are not integers' error, got %v", err)
 	}
 }
+
+func TestStack_Swap(t *testing.T) {
+	s := stackGo.NewStack()
+
+	s.Push(1)
+	s.Push(2)
+	s.Push(3)
+
+	// Test valid swap
+	err := s.Swap(0, 2)
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+	}
+
+	val, _ := s.Pop()
+	if val != 1 {
+		t.Errorf("Expected value 1 at the top after swap, got %v", val)
+	}
+
+	val, _ = s.Pop()
+	if val != 2 {
+		t.Errorf("Expected value 2 at the second position after swap, got %v", val)
+	}
+
+	val, _ = s.Pop()
+	if val != 3 {
+		t.Errorf("Expected value 3 at the bottom after swap, got %v", val)
+	}
+
+	// Test invalid swap (index out of range)
+	err = s.Swap(0, 3)
+	if err == nil || err.Error() != "index out of range" {
+		t.Errorf("Expected 'index out of range' error, got %v", err)
+	}
+
+	// Test invalid swap (index out of range)
+	err = s.Swap(-1, 2)
+	if err == nil || err.Error() != "index out of range" {
+		t.Errorf("Expected 'index out of range' error, got %v", err)
+	}
+}

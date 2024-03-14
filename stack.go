@@ -64,3 +64,15 @@ func (s *Stack) Compare(i, k int) (int, error) {
 		return 1, nil
 	}
 }
+
+func (s *Stack) Swap(i, j int) error {
+	s.Lock()
+	defer s.Unlock()
+
+	if i < 0 || i >= len(s.s) || j < 0 || j >= len(s.s) {
+		return errors.New("index out of range")
+	}
+
+	s.s[i], s.s[j] = s.s[j], s.s[i]
+	return nil
+}
