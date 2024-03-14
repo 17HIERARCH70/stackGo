@@ -45,38 +45,6 @@ func TestStack_EmptyStack(t *testing.T) {
 	}
 }
 
-func TestStack_PushPopMixedTypes(t *testing.T) {
-	s := stackGo.NewStack()
-
-	s.Push(1)
-	s.Push("test")
-	s.Push(3.14)
-
-	val, err := s.Pop()
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-	}
-	if val != 3.14 {
-		t.Errorf("Expected value 3.14, got %v", val)
-	}
-
-	val, err = s.Pop()
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-	}
-	if val != "test" {
-		t.Errorf("Expected value 'test', got %v", val)
-	}
-
-	val, err = s.Pop()
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-	}
-	if val != 1 {
-		t.Errorf("Expected value 1, got %v", val)
-	}
-}
-
 func TestStack_Compare(t *testing.T) {
 	s := stackGo.NewStack()
 
@@ -118,13 +86,6 @@ func TestStack_Compare(t *testing.T) {
 	_, err = s.Compare(-1, 2)
 	if err == nil || err.Error() != "index out of range" {
 		t.Errorf("Expected 'index out of range' error, got %v", err)
-	}
-
-	// Test comparing elements of different types
-	s.Push("test")
-	_, err = s.Compare(0, 3)
-	if err == nil || err.Error() != "elements are not integers" {
-		t.Errorf("Expected 'elements are not integers' error, got %v", err)
 	}
 }
 

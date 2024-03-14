@@ -7,27 +7,27 @@ import (
 
 type Stack struct {
 	sync.Mutex // Embed the mutex for easier locking
-	s          []interface{}
+	s          []int
 }
 
 func NewStack() *Stack {
-	return &Stack{s: make([]interface{}, 0)}
+	return &Stack{s: make([]int, 0)}
 }
 
-func (s *Stack) Push(v interface{}) {
+func (s *Stack) Push(v int) {
 	s.Lock()
 	defer s.Unlock()
 
 	s.s = append(s.s, v)
 }
 
-func (s *Stack) Pop() (interface{}, error) {
+func (s *Stack) Pop() (int, error) {
 	s.Lock()
 	defer s.Unlock()
 
 	l := len(s.s)
 	if l == 0 {
-		return nil, errors.New("empty stack")
+		return 0, errors.New("empty stack")
 	}
 
 	res := s.s[l-1]
@@ -50,30 +50,23 @@ func (s *Stack) Compare(i, k int) (int, error) {
 		return 0, errors.New("index out of range")
 	}
 
-	elemI, okI := s.s[i].(int)
-	elemK, okK := s.s[k].(int)
-	if !okI || !okK {
-		return 0, errors.New("elements are not integers")
-	}
-
-	if elemI == elemK {
+	if s.s[i] == s.s[k] {
 		return 0, nil
-	} else if elemI < elemK {
+	} else if s.s[i] < s.s[k] {
 		return -1, nil
 	} else {
 		return 1, nil
 	}
 }
 
-// swap func
-func (s *Stack) Swap(i, j int) error {
+func (s *Stack) Swap(i, k int) error {
 	s.Lock()
 	defer s.Unlock()
 
-	if i < 0 || i >= len(s.s) || j < 0 || j >= len(s.s) {
+	if i < 0 || i >= len(s.s) || k < 0 || k >= len(s.s) {
 		return errors.New("index out of range")
 	}
 
-	s.s[i], s.s[j] = s.s[j], s.s[i]
+	s.s[i], s.s[k] = s.s[k], s.s[i]
 	return nil
 }
