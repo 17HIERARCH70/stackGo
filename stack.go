@@ -65,6 +65,7 @@ func (s *Stack) Compare(i, k int) (int, error) {
 	}
 }
 
+// swap func
 func (s *Stack) Swap(i, j int) error {
 	s.Lock()
 	defer s.Unlock()

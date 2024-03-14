@@ -6,6 +6,7 @@ import (
 	"github.com/17HIERARCH70/stackGo"
 )
 
+// base tests
 func TestStack_PushPop(t *testing.T) {
 	s := stackGo.NewStack()
 
